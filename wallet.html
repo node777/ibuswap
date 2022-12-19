@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LORBNET</title>
+    <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+    <div id="ui">
+        <div id="sidebar">
+        </div>
+        <div id="overlay" onclick="hideSidebar()"></div>
+    </div>
+    <div id="header" class="flex">
+        <div id="hamburger" class="pointer" onclick="displaySidebar()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <a href="./index.html"><h1>LORBNET</h1></a>
+        <div id="walletIcon" class="pointer">
+            <img src="assets/icons/wallet.png" />
+        </div>
+    </div>
+    <div id="content">
+        <h2>LORB PRICE</h2> 
+        <p class="center">$0.000000001891328 USD</p>
+        <div class="box">
+            <div id="wallet">
+                <h2>Wallet</h2>
+                <div class="br"></div>
+                
+                <h3>About</h3>
+                <p>ERC-20 Compliant Token on the main Ethereum Network. Holds a reserve of 60% of supply as backing for stablecoins on other networks.</p>
+                <div class="br"></div>
+                <h3>Contract Address</h3>
+                <div class="address">0x5c173a51468694c0114aad0c14cbea350f40c33e</div>
+                <div class="br"></div>
+                
+                <h3>Swap</h3>
+                <div class="button" onclick="document.location.href='https://app.1inch.io/#/1/classic/swap/ETH/0x5c173a51468694c0114aad0c14cbea350f40c33e'">Swap on 1inch</div>
+            </div>
+        </div>
+        <div class="button" onclick="document.location.href='./index.html'">Home</div>
+    </div>
+    <div id="footer">
+        Copyright 2021 In Lorb We Trust
+    </div>
+    <script src="script.js">
+    </script>
+</body>
+</html>
