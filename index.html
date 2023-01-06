@@ -1,31 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IBUSWAP</title>
     <link rel="stylesheet" href="./style.css" />
-    
+    <link rel="icon" href="https://node777.github.io/ibuswap/assets/coin.png">
+
+    <script src="ethers.js">
+    </script>
     <script>
-        async function addToken(){
+        let price;
+        async function getPrice() {
+        }
+        async function addToken() {
             const tokenAddress = '0x5c173a51468694c0114aad0c14cbea350f40c33e';
             const tokenSymbol = 'IBU';
             const tokenDecimals = 18;
-            const tokenImage = 'https://lorb.net/assets/art/BOZO_gold_coins_lobster_claw_lobster_god_classical_heaven_68f0592f-5d09-4012-984a-6025e2d422ed.png';
+            const tokenImage = 'https://node777.github.io/ibuswap/assets/coin.png';
 
             try {
-            // wasAdded is a boolean. Like any RPC method, an error may be thrown.
-            const wasAdded = await ethereum.request({
+                // wasAdded is a boolean. Like any RPC method, an error may be thrown.
+                const wasAdded = await ethereum.request({
                     method: 'wallet_watchAsset',
                     params: {
-                    type: 'ERC20', // Initially only supports ERC20, but eventually more!
-                    options: {
-                        address: tokenAddress, // The address that the token is at.
-                        symbol: tokenSymbol, // A ticker symbol or shorthand, up to 5 chars.
-                        decimals: tokenDecimals, // The number of decimals in the token
-                        image: tokenImage, // A string url of the token logo
-                    },
+                        type: 'ERC20', // Initially only supports ERC20, but eventually more!
+                        options: {
+                            address: tokenAddress, // The address that the token is at.
+                            symbol: tokenSymbol, // A ticker symbol or shorthand, up to 5 chars.
+                            decimals: tokenDecimals, // The number of decimals in the token
+                            image: tokenImage, // A string url of the token logo
+                        },
                     },
                 });
 
@@ -35,11 +42,47 @@
                     console.log('Your loss!');
                 }
             } catch (error) {
-            console.log(error);
+                console.log(error);
             }
+        }
+
+        if (ethereum) {
+            var provider = new ethers.providers.Web3Provider(ethereum);
+            var signer = provider.getSigner();
+            ethereum.enable()
+        }
+        const ibuToken="0xA8e0691420bDe0cf9b32B2773CCfF8c029441F24"
+        const uniswapUsdcAddress = "0x582a14ef1b77c293d815207324da81c8642147c8";
+        const testContract = "0x6e9E98C924c2abD084d5665464807Ce0A344E799"
+        
+        const erc20Abi = [
+            {"inputs":[{"internalType":"string","name":"name_","type":"string"},{"internalType":"string","name":"symbol_","type":"string"},{"internalType":"uint256","name":"decimals_","type":"uint256"},{"internalType":"uint256","name":"initialBalance_","type":"uint256"},{"internalType":"address","name":"tokenOwner_","type":"address"},{"internalType":"address payable","name":"feeReceiver_","type":"address"}],"stateMutability":"payable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"subtractedValue","type":"uint256"}],"name":"decreaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"addedValue","type":"uint256"}],"name":"increaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"sender","type":"address"},{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"}
+        ]
+        const uniswapAbi = [
+            {"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"int24","name":"tickLower","type":"int24"},{"indexed":true,"internalType":"int24","name":"tickUpper","type":"int24"},{"indexed":false,"internalType":"uint128","name":"amount","type":"uint128"},{"indexed":false,"internalType":"uint256","name":"amount0","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amount1","type":"uint256"}],"name":"Burn","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":false,"internalType":"address","name":"recipient","type":"address"},{"indexed":true,"internalType":"int24","name":"tickLower","type":"int24"},{"indexed":true,"internalType":"int24","name":"tickUpper","type":"int24"},{"indexed":false,"internalType":"uint128","name":"amount0","type":"uint128"},{"indexed":false,"internalType":"uint128","name":"amount1","type":"uint128"}],"name":"Collect","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"sender","type":"address"},{"indexed":true,"internalType":"address","name":"recipient","type":"address"},{"indexed":false,"internalType":"uint128","name":"amount0","type":"uint128"},{"indexed":false,"internalType":"uint128","name":"amount1","type":"uint128"}],"name":"CollectProtocol","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"sender","type":"address"},{"indexed":true,"internalType":"address","name":"recipient","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount0","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amount1","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"paid0","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"paid1","type":"uint256"}],"name":"Flash","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint16","name":"observationCardinalityNextOld","type":"uint16"},{"indexed":false,"internalType":"uint16","name":"observationCardinalityNextNew","type":"uint16"}],"name":"IncreaseObservationCardinalityNext","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint160","name":"sqrtPriceX96","type":"uint160"},{"indexed":false,"internalType":"int24","name":"tick","type":"int24"}],"name":"Initialize","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"sender","type":"address"},{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"int24","name":"tickLower","type":"int24"},{"indexed":true,"internalType":"int24","name":"tickUpper","type":"int24"},{"indexed":false,"internalType":"uint128","name":"amount","type":"uint128"},{"indexed":false,"internalType":"uint256","name":"amount0","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amount1","type":"uint256"}],"name":"Mint","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint8","name":"feeProtocol0Old","type":"uint8"},{"indexed":false,"internalType":"uint8","name":"feeProtocol1Old","type":"uint8"},{"indexed":false,"internalType":"uint8","name":"feeProtocol0New","type":"uint8"},{"indexed":false,"internalType":"uint8","name":"feeProtocol1New","type":"uint8"}],"name":"SetFeeProtocol","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"sender","type":"address"},{"indexed":true,"internalType":"address","name":"recipient","type":"address"},{"indexed":false,"internalType":"int256","name":"amount0","type":"int256"},{"indexed":false,"internalType":"int256","name":"amount1","type":"int256"},{"indexed":false,"internalType":"uint160","name":"sqrtPriceX96","type":"uint160"},{"indexed":false,"internalType":"uint128","name":"liquidity","type":"uint128"},{"indexed":false,"internalType":"int24","name":"tick","type":"int24"}],"name":"Swap","type":"event"},{"inputs":[{"internalType":"int24","name":"tickLower","type":"int24"},{"internalType":"int24","name":"tickUpper","type":"int24"},{"internalType":"uint128","name":"amount","type":"uint128"}],"name":"burn","outputs":[{"internalType":"uint256","name":"amount0","type":"uint256"},{"internalType":"uint256","name":"amount1","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"int24","name":"tickLower","type":"int24"},{"internalType":"int24","name":"tickUpper","type":"int24"},{"internalType":"uint128","name":"amount0Requested","type":"uint128"},{"internalType":"uint128","name":"amount1Requested","type":"uint128"}],"name":"collect","outputs":[{"internalType":"uint128","name":"amount0","type":"uint128"},{"internalType":"uint128","name":"amount1","type":"uint128"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint128","name":"amount0Requested","type":"uint128"},{"internalType":"uint128","name":"amount1Requested","type":"uint128"}],"name":"collectProtocol","outputs":[{"internalType":"uint128","name":"amount0","type":"uint128"},{"internalType":"uint128","name":"amount1","type":"uint128"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"factory","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"fee","outputs":[{"internalType":"uint24","name":"","type":"uint24"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"feeGrowthGlobal0X128","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"feeGrowthGlobal1X128","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount0","type":"uint256"},{"internalType":"uint256","name":"amount1","type":"uint256"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"flash","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint16","name":"observationCardinalityNext","type":"uint16"}],"name":"increaseObservationCardinalityNext","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint160","name":"sqrtPriceX96","type":"uint160"}],"name":"initialize","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"liquidity","outputs":[{"internalType":"uint128","name":"","type":"uint128"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"maxLiquidityPerTick","outputs":[{"internalType":"uint128","name":"","type":"uint128"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"int24","name":"tickLower","type":"int24"},{"internalType":"int24","name":"tickUpper","type":"int24"},{"internalType":"uint128","name":"amount","type":"uint128"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"mint","outputs":[{"internalType":"uint256","name":"amount0","type":"uint256"},{"internalType":"uint256","name":"amount1","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"observations","outputs":[{"internalType":"uint32","name":"blockTimestamp","type":"uint32"},{"internalType":"int56","name":"tickCumulative","type":"int56"},{"internalType":"uint160","name":"secondsPerLiquidityCumulativeX128","type":"uint160"},{"internalType":"bool","name":"initialized","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint32[]","name":"secondsAgos","type":"uint32[]"}],"name":"observe","outputs":[{"internalType":"int56[]","name":"tickCumulatives","type":"int56[]"},{"internalType":"uint160[]","name":"secondsPerLiquidityCumulativeX128s","type":"uint160[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"name":"positions","outputs":[{"internalType":"uint128","name":"liquidity","type":"uint128"},{"internalType":"uint256","name":"feeGrowthInside0LastX128","type":"uint256"},{"internalType":"uint256","name":"feeGrowthInside1LastX128","type":"uint256"},{"internalType":"uint128","name":"tokensOwed0","type":"uint128"},{"internalType":"uint128","name":"tokensOwed1","type":"uint128"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"protocolFees","outputs":[{"internalType":"uint128","name":"token0","type":"uint128"},{"internalType":"uint128","name":"token1","type":"uint128"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint8","name":"feeProtocol0","type":"uint8"},{"internalType":"uint8","name":"feeProtocol1","type":"uint8"}],"name":"setFeeProtocol","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"slot0","outputs":[{"internalType":"uint160","name":"sqrtPriceX96","type":"uint160"},{"internalType":"int24","name":"tick","type":"int24"},{"internalType":"uint16","name":"observationIndex","type":"uint16"},{"internalType":"uint16","name":"observationCardinality","type":"uint16"},{"internalType":"uint16","name":"observationCardinalityNext","type":"uint16"},{"internalType":"uint8","name":"feeProtocol","type":"uint8"},{"internalType":"bool","name":"unlocked","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"int24","name":"tickLower","type":"int24"},{"internalType":"int24","name":"tickUpper","type":"int24"}],"name":"snapshotCumulativesInside","outputs":[{"internalType":"int56","name":"tickCumulativeInside","type":"int56"},{"internalType":"uint160","name":"secondsPerLiquidityInsideX128","type":"uint160"},{"internalType":"uint32","name":"secondsInside","type":"uint32"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"bool","name":"zeroForOne","type":"bool"},{"internalType":"int256","name":"amountSpecified","type":"int256"},{"internalType":"uint160","name":"sqrtPriceLimitX96","type":"uint160"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"swap","outputs":[{"internalType":"int256","name":"amount0","type":"int256"},{"internalType":"int256","name":"amount1","type":"int256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"int16","name":"","type":"int16"}],"name":"tickBitmap","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"tickSpacing","outputs":[{"internalType":"int24","name":"","type":"int24"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"int24","name":"","type":"int24"}],"name":"ticks","outputs":[{"internalType":"uint128","name":"liquidityGross","type":"uint128"},{"internalType":"int128","name":"liquidityNet","type":"int128"},{"internalType":"uint256","name":"feeGrowthOutside0X128","type":"uint256"},{"internalType":"uint256","name":"feeGrowthOutside1X128","type":"uint256"},{"internalType":"int56","name":"tickCumulativeOutside","type":"int56"},{"internalType":"uint160","name":"secondsPerLiquidityOutsideX128","type":"uint160"},{"internalType":"uint32","name":"secondsOutside","type":"uint32"},{"internalType":"bool","name":"initialized","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"token0","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"token1","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}
+    ]
+        async function getPrice(){
+            const contract = await new ethers.Contract(uniswapUsdcAddress, uniswapAbi, provider);
+            let slot0 = await contract.slot0()
+            let sqrtPriceX96 = await slot0.sqrtPriceX96; 
+            return  sqrtPriceX96 ** 2 / 2 ** 192
+        }
+        (async function displayPrice(){
+            let usdPrice =  await getPrice()
+            price = ( usdPrice / (10 ** 12))
+            document.getElementById("price").innerHTML = (1/price).toFixed(10)
+            document.getElementById("swapOutput").value=document.getElementById("swapInput").value*price;
+        })();
+        function getQuote(){
+            document.getElementById("swapOutput").value=document.getElementById("swapInput").value*price;
+        }
+        async function approve(){
+            const contract = await new ethers.Contract(ibuToken, erc20Abi, signer);
+            let approved = contract.approve(testContract, "1000000000000000000000000000000")
         }
     </script>
 </head>
+
 <body>
     <div id="ui">
         <div id="sidebar">
@@ -47,17 +90,17 @@
         <div id="overlay" onclick="hideSidebar()"></div>
     </div>
     <div id="header" class="flex glass">
-        <div id="hamburger" class="pointer" onclick="displaySidebar()">
+        <!-- <div id="hamburger" class="pointer" onclick="displaySidebar()">
             <div></div>
             <div></div>
             <div></div>
-        </div>
-        <a href="./index.html">
+        </div> -->
+        <a href="https://ibizainu.com/">
             <img class="logo" src="./assets/IBUSWAPP.png" />
         </a>
-        <div id="walletIcon" class="pointer">
-            <!-- <img src="assets/icons/wallet.png" /> -->
-        </div>
+        <!-- <div id="walletIcon" class="pointer">
+            <img src="assets/icons/wallet.png" />
+        </div> -->
     </div>
     <div id="content">
         <div class="glass box">
@@ -65,19 +108,20 @@
                 <img width="180px" src="./assets/coin.png">
             </div>
             <div>
-                <h2>IBU PRICE</h2> 
-                <p id="price" class="center">$0.000000001891328 USD</p>
+                <h2>IBU Price</h2>
+                <p id="price" class="center">Loading... make sure your wallet is connected, and you are on polygon network</p>
             </div>
         </div>
         <div class="glass box">
             <h2>Swap</h2>
             <div>
-                <input id="swapInput" placeholder="swap amount" value="1.0" type="number" oninput="lorb.getQuote()">
+                <input id="swapInput" placeholder="swap amount" value="1.0" type="number" oninput="getQuote()">
                 <select>
                     <option>
                         <div>
-                            ETH
-                            <img class="currencyIcon" src="https://github.com/spothq/cryptocurrency-icons/raw/master/32/black/eth.png" />
+                            USDC
+                            <img class="currencyIcon"
+                                src="https://github.com/spothq/cryptocurrency-icons/raw/master/32/black/eth.png" />
                         </div>
                     </option>
                 </select>
@@ -95,7 +139,7 @@
                     </option>
                 </select>
             </div>
-            <div class="button glass" onclick="lorb.swap()">Swap</div>
+            <div class="button glass" onclick="approve()">Approve</div>
             <div class="br"></div>
             <h2>Add token to wallet</h2>
             <div class="button glass" onclick="addToken()">ADD TOKEN</div>
@@ -104,68 +148,70 @@
             <div>
                 <h2>Ethereum Mainnet IBU</h2>
                 <div class="br"></div>
-                
+
                 <h3>About</h3>
-                <p>ERC-20 Compliant Token on the main Ethereum Network. <br/><br/>
+                <p>ERC-20 Compliant Token on the main Ethereum Network. <br /><br />
                     Currently accounts for 50% of revolving supply.</p>
                 <div class="br"></div>
                 <h3>Contract Address</h3>
-                <div class="address">0x5c173a51468694c0114aad0c14cbea350f40c33e</div>
+                <div class="address">0xA8e0691420bDe0cf9b32B2773CCfF8c029441F24</div>
                 <div class="br"></div>
-                
-                <h3>Swap</h3>
-                <div class="button" onclick="document.location.href='https://app.1inch.io/#/1/classic/swap/ETH/0x5c173a51468694c0114aad0c14cbea350f40c33e'">Swap on 1inch</div>
-                <div class="button" onclick="document.location.href='https://app.sushi.com/swap?inputCurrency=ETH&outputCurrency=0x5C173A51468694C0114aad0c14cbEA350f40C33e'">Swap on Sushi</div>
 
+                <h3>Swap</h3>
+                <div class="button"
+                    onclick="document.location.href='https://app.uniswap.org/#/swap?inputCurrency=USDC&outputCurrency=0xA8e0691420bDe0cf9b32B2773CCfF8c029441F24'">
+                    Swap on Uni
+                </div>
             </div>
         </div>
         <div class="box glass">
             <div>
                 <h2>Polygon IBU</h2>
-                <p>Fast and cheap IBU stablecoin on the Matic Network. Will be bridgeable to mainnet.<br/><br/>
+                <p>Fast and cheap IBU stablecoin on the Matic Network. Will be bridgeable to mainnet.<br /><br />
                     Currently accounts for 50% of revolving supply.
 
                 </p>
                 <div class="br"></div>
                 <h3>Contract Address</h3>
-                <div class="address">0x5c173a51468694c0114aad0c14cbea350f40c33e</div>
+                <div class="address">0xA8e0691420bDe0cf9b32B2773CCfF8c029441F24</div>
                 <div class="br"></div>
-                
+
                 <h3>Swap</h3>
-                <div class="button" onclick="document.location.href='https://app.1inch.io/#/137/classic/swap/MATIC/0x5c173a51468694c0114aad0c14cbea350f40c33e'">Swap on 1inch</div>
-                <div class="button" onclick="document.location.href='https://app.sushi.com/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0x5C173A51468694C0114aad0c14cbEA350f40C33e'">Swap on Sushi</div>
+                <div class="button"
+                    onclick="document.location.href='https://app.uniswap.org/#/swap?inputCurrency=USDC&outputCurrency=0xA8e0691420bDe0cf9b32B2773CCfF8c029441F24'">
+                    Swap on Uni
+                </div>
             </div>
         </div>
         <div class="box glass">
             <div>
                 <h2>IBUNOTES</h2>
                 <img src="./assets/ibunote-0.png" width="90%">
-                <p>Fast and cheap IBU stablecoin on the Matic Network. Will be bridgeable to mainnet.<br/><br/>
+                <p>Fast and cheap IBU stablecoin on the Matic Network. Will be bridgeable to mainnet.<br /><br />
                     Currently accounts for 50% of revolving supply.
 
                 </p>
                 <div class="br"></div>
                 <h3>Contract Address</h3>
-                <div class="address">0x5c173a51468694c0114aad0c14cbea350f40c33e</div>
+                <div class="address">0xA8e0691420bDe0cf9b32B2773CCfF8c029441F24</div>
                 <div class="br"></div>
-                
+
                 <h3>Swap</h3>
-                <div class="button" onclick="document.location.href='https://app.1inch.io/#/137/classic/swap/MATIC/0x5c173a51468694c0114aad0c14cbea350f40c33e'">Swap on 1inch</div>
-                <div class="button" onclick="document.location.href='https://app.sushi.com/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0x5C173A51468694C0114aad0c14cbEA350f40C33e'">Swap on Sushi</div>
+                <div class="button"
+                    onclick="document.location.href='https://app.uniswap.org/#/swap?inputCurrency=USDC&outputCurrency=0xA8e0691420bDe0cf9b32B2773CCfF8c029441F24'">
+                    Swap on Uni
+                </div>
             </div>
         </div>
         <div class="button glass" onclick="addToken()">ADD TOKEN</div>
-        <div class="button glass" onclick="document.location.href='./index.html'">Home</div>
+        <div class="button glass" onclick="document.location.href='https://ibizainu.com/'">Home</div>
     </div>
     <div id="footer" class="glass">
         Copyright 2022 In Crypto We Trust
     </div>
-	<div class="background">
-		<img src="assets/background.png" >
-	</div>
-    <script src="script.js">
-    </script>
-    <script src="ethers.js">
-    </script>
+    <div class="background">
+        <img src="assets/background.png">
+    </div>
 </body>
+
 </html>
