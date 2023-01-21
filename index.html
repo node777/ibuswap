@@ -11,8 +11,10 @@
 
     <script src="ethers.js">
     </script>
+
+
     <script>
-        let price;
+        let price = 0.0000050005;
         async function getPrice() {
         }
         async function addToken() {
@@ -81,6 +83,7 @@
             let approved = contract.approve(testContract, "1000000000000000000000000000000")
         }
     </script>
+
 </head>
 
 <body>
@@ -109,7 +112,7 @@
             </div>
             <div>
                 <h2>IBU Price</h2>
-                <p id="price" class="center">Loading... make sure your wallet is connected, and you are on polygon network</p>
+                <p id="price" class="center">0.0000050005</p>
             </div>
         </div>
         <div class="glass box">
@@ -167,26 +170,6 @@
         <div class="box glass">
             <div>
                 <h2>Polygon IBU</h2>
-                <p>Fast and cheap IBU stablecoin on the Matic Network. Will be bridgeable to mainnet.<br /><br />
-                    Currently accounts for 50% of revolving supply.
-
-                </p>
-                <div class="br"></div>
-                <h3>Contract Address</h3>
-                <div class="address">0xA8e0691420bDe0cf9b32B2773CCfF8c029441F24</div>
-                <div class="br"></div>
-
-                <h3>Swap</h3>
-                <div class="button"
-                    onclick="document.location.href='https://app.uniswap.org/#/swap?inputCurrency=USDC&outputCurrency=0xA8e0691420bDe0cf9b32B2773CCfF8c029441F24'">
-                    Swap on Uni
-                </div>
-            </div>
-        </div>
-        <div class="box glass">
-            <div>
-                <h2>IBUNOTES</h2>
-                <img src="./assets/ibunote-0.png" width="90%">
                 <p>Fast and cheap IBU stablecoin on the Matic Network. Will be bridgeable to mainnet.<br /><br />
                     Currently accounts for 50% of revolving supply.
 
